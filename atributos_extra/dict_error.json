@@ -39,7 +39,11 @@
         "Côte d'Ivoire": "Ivory Coast",
         "Cote d'Ivoire": "Ivory Coast",
         "Gaza Strip": "Palestine",
-        "West Bank and Gaza": "Palestine"
-
+        "West Bank and Gaza": "Palestine",
+        "Bolivia Plurinational States of ": "Bolivia",
+        "Brunei Darussalam":"Brunei",
+        "Myanmar": "Burma",
+        "East Timor": "Timor-Leste"
+        
     }
 }
