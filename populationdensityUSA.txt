@@ -1,0 +1,51 @@
+State Density(population/area)
+New Jersey,1,207.8
+Rhode Island,1,010.8
+Massachusetts,866.6
+Connecticut,741.2
+Maryland,614.5
+Delaware,484.1
+New York,419.3
+Florida	,375.9
+Pennsylvania,285.7
+Ohio,283.6
+California,251.0
+Illinois,231.4
+Hawaii,222.9
+Virginia,211.7
+North Carolina,206.2
+Indiana,184.6
+Georgia,176.4
+Michigan,174.7
+South Carolina,162.6
+Tennessee,160.1
+New Hampshire,148.4
+Kentucky,111.4
+Washington,107.8
+Louisiana,107.2
+Wisconsin,106.3
+Texas,104.9
+Alabama,95.8
+Missouri,88.3
+West Virginia,76.6
+Minnesota,69.0
+Vermont,67.7
+Mississippi,63.8
+Arizona,60.1
+Arkansas,57.2
+Oklahoma,57.0
+Iowa,55.9
+Colorado,52.6
+Maine,43.1
+Oregon,42.0
+Utah,36.5
+Kansas,35.6
+Nevada,26.3
+Nebraska,24.7
+Idaho,20.0
+New Mexico,17.2
+South Dakota,11.3
+North Dakota,11.0
+Montana,7.1
+Wyoming,6.0
+Alaska,1.3
