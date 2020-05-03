@@ -9,7 +9,8 @@ filepath_read = 'atributos_extra/covid_19_data.csv'
 filepath_write = 'dataset.csv'
 dataset_headers = ['num_dia_desde_primer_caso','region','pais',
     'num_confirmados','num_fallecidos','num_recuperados','acc_confirmados',
-    'acc_fallecidos','acc_recuperados','fecha_observacion']
+    'acc_fallecidos','acc_recuperados','fecha_observacion','num_dia_desde_22_enero']
+date_inicio_dataset = datetime.date(2020,1,22)
 primera_fecha_pais = dict()
 primera_fecha_region = dict()
 ultimo_dato_region = dict()
@@ -30,6 +31,7 @@ with open(filepath_write, 'w', newline="") as fpw:
                 fechaObservacion = datetime.date(int(arrFechaObservacion[2]),
                     int(arrFechaObservacion[0]),
                     int(arrFechaObservacion[1]))
+                num_dia_desde_22_enero = (fechaObservacion - date_inicio_dataset).days
                 region = line[2]
                 pais = line[3]
                 acc_confirmados = int(float(line[5]))
@@ -72,7 +74,7 @@ with open(filepath_write, 'w', newline="") as fpw:
                 #if region=="Diamond Princess cruise ship" :
                 #if pais=="occupied Palestinian territory" :
                 #    print([num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados])
-                row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados, line[1]]
+                row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados, line[1], num_dia_desde_22_enero]
                 csv_writer.writerow(row)
             contador += 1
 
