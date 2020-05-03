@@ -2,7 +2,7 @@
     "Aruba": ["Netherlands", "Aruba"],
     "Cayman Islands": ["UK", "Cayman Islands"],
     "Channel Islands": ["UK", "Channel Islands"],
-    "Austria": ["Austria", ""],
+    "Austria": ["Austria", null],
     "Curacao": ["Netherlands", "Curacao"],
     "Faroe Islands": ["Denmark", "Faroe Islands"],
     "French Guiana": ["France", "French Guiana"],
@@ -10,14 +10,14 @@
     "Greenland": ["Denmark", "Greenland"],
     "Guadeloupe": ["France", "Guadeloupe"],
     "Guam": ["US", "Guam"],
-    "Iraq": ["Iraq", ""],
-    "Lebanon": ["Lebanon", ""],
+    "Iraq": ["Iraq", null],
+    "Lebanon": ["Lebanon", null],
     "Martinique": ["France", "Martinique"],
     "Mayotte": ["France","Mayotte"],
     "Others": ["Others", "Diamond Princess cruise ship"],
     "Puerto Rico": ["US", "Puerto Rico"],
     "Barthelemy": ["France", "Saint Barthelemy"],
     "St. Martin": ["St Martin", "France"],
-    "Taiwan": ["Taiwan", ""]
+    "Taiwan": ["Taiwan", null]
 
 }

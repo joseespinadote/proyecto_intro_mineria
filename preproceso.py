@@ -4,7 +4,7 @@
 import datetime
 import csv
 
-filepath_read = 'novel-corona-virus-2019-dataset/covid_19_data.csv'
+filepath_read = 'atributos_extra/covid_19_data.csv'
 filepath_write = 'dataset.csv'
 dataset_headers = ['num_dia_desde_primer_caso','region','pais',
     'num_confirmados','num_fallecidos','num_recuperados','acc_confirmados',
@@ -13,7 +13,7 @@ primera_fecha_pais = dict()
 primera_fecha_region = dict()
 ultimo_dato_region = dict()
 ultimo_dato_pais = dict()
-with open(filepath_write, 'w') as fpw:
+with open(filepath_write, 'w', newline="") as fpw:
     csv_writer = csv.writer(fpw)
     csv_writer.writerow(dataset_headers)
     with open(filepath_read, encoding="utf-8") as fp:
@@ -36,11 +36,17 @@ with open(filepath_write, 'w') as fpw:
                 acc_recuperados = int(float(line[7]))
                 CFR = [acc_confirmados,acc_fallecidos,acc_recuperados]
                 llave = region
-                # waaaaaat ??
+                # Filtro para Diamond Princess en region
+                if "Diamond Princess" in llave:
+                    continue
+                # Filas de recuperados US y Canada
                 if llave == "Recovered" :
                     continue
                 if region.strip() == "" :
                     llave = pais
+                    # Filtro para Diamond Princess en pais
+                    if "Diamond Princes" in llave:
+                        continue
                     if llave not in primera_fecha_pais :
                         primera_fecha_pais[llave] = fechaObservacion
                     else :
@@ -68,4 +74,3 @@ with open(filepath_write, 'w') as fpw:
                 row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados]
                 csv_writer.writerow(row)
             contador += 1
-

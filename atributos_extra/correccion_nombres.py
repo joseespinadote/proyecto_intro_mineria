@@ -8,7 +8,6 @@ from pathlib import Path
 
 parent_directory = Path().absolute().parent
 covid_data = parent_directory / "novel-corona-virus-2019-dataset/covid_19_data.csv"
-extra_atributes = 'paises_atributos.csv'
 covid_data_frame = pd.read_csv(covid_data)
 
 ### Diccionarios de correciones
@@ -28,6 +27,9 @@ covid_data_frame.replace(dict_error, inplace=True)
 for key in dict_pares:
     covid_data_frame.loc[(covid_data_frame['Country/Region'] == key), ['Country/Region', 'Province/State']]=dict_pares[key]
 
+covid_data_frame['Province/State'].fillna(value=np.nan, inplace=True)
+
+
 ### Pares Pais-Region
 pares = []
 for pair in covid_data_frame[['Country/Region', 'Province/State']].values.tolist():
@@ -41,6 +43,11 @@ pares.sort()
 par_df = pd.DataFrame(pares)
 paises_covid = covid_data_frame['Country/Region'].unique()
 paises_covid.sort()
+
+### Eliminar duplicados para (ObservationDate, Province/State, Country/Region)
+
+covid_data_frame.sort_values(by=['ObservationDate', 'Country/Region', 'Province/State', 'Confirmed'], inplace=True)
+covid_data_frame.drop_duplicates(['ObservationDate', 'Country/Region', 'Province/State'], keep='last', inplace=True)
 
 ### Cargar tablas de atributos extra
 
@@ -58,8 +65,7 @@ PIB.replace(dict_error, inplace=True)
 indiceGINI.replace(dict_error, inplace=True)
 tazaMuerte.replace(dict_error, inplace=True)
 
-#### JOIN de tablas
-
+#### JOIN de tablas 
 
 paises_covid_df = pd.DataFrame(covid_data_frame['Country/Region'].unique(), columns=['Country/Region'])
 paises_covid_df = paises_covid_df.join(PIB.set_index('Country/Region'), on='Country/Region')
@@ -68,11 +74,15 @@ paises_covid_df = paises_covid_df.join(edadMedia.set_index('Country/Region'), on
 paises_covid_df = paises_covid_df.join(indiceGINI.set_index('Country/Region'), on='Country/Region')
 paises_covid_df = paises_covid_df.join(tazaMuerte.set_index('Country/Region'), on='Country/Region')
 
+#### Renombrar columnas
+
+paises_covid_df.columns = ['pais', 'gdp_rank', 'gdp_usd', 'gdp_en_salud', 'edad_media', 'gini', 'poblacion', 'taza_muerte1000']
+
 
 ### Guardar datos
 covid_data_frame.to_csv('covid_19_data.csv', index=False)
 par_df.to_csv('pais_region.csv', index=False)
-paises_covid_df.to_csv(extra_atributes, index=False)
+paises_covid_df.to_csv('atributos_paises.csv', index=False)
 
 
 ### Revisar paises entre tablas (checkear diferencias)
