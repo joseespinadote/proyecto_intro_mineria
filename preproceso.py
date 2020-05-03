@@ -9,7 +9,7 @@ filepath_read = 'atributos_extra/covid_19_data.csv'
 filepath_write = 'dataset.csv'
 dataset_headers = ['num_dia_desde_primer_caso','region','pais',
     'num_confirmados','num_fallecidos','num_recuperados','acc_confirmados',
-    'acc_fallecidos','acc_recuperados']
+    'acc_fallecidos','acc_recuperados','fecha_observacion']
 primera_fecha_pais = dict()
 primera_fecha_region = dict()
 ultimo_dato_region = dict()
@@ -72,7 +72,7 @@ with open(filepath_write, 'w', newline="") as fpw:
                 #if region=="Diamond Princess cruise ship" :
                 #if pais=="occupied Palestinian territory" :
                 #    print([num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados])
-                row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados]
+                row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados, line[1]]
                 csv_writer.writerow(row)
             contador += 1
 
