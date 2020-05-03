@@ -34,6 +34,8 @@ with open(filepath_write, 'w', newline="") as fpw:
                 num_dia_desde_22_enero = (fechaObservacion - date_inicio_dataset).days
                 region = line[2]
                 pais = line[3]
+                if(not region):
+                    region = pais
                 acc_confirmados = int(float(line[5]))
                 acc_fallecidos = int(float(line[6]))
                 acc_recuperados = int(float(line[7]))
