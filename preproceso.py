@@ -3,6 +3,7 @@
 # encontrado en kaggle (por jose)
 import datetime
 import csv
+import os
 
 filepath_read = 'atributos_extra/covid_19_data.csv'
 filepath_write = 'dataset.csv'
@@ -74,3 +75,27 @@ with open(filepath_write, 'w', newline="") as fpw:
                 row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados]
                 csv_writer.writerow(row)
             contador += 1
+
+### Modifica el gdp, esta como string y no como un numero en la tabla original
+### quizas es mejor cambiarlo ahi
+
+with open('atributos_extra/atributos_paises.csv') as infile, open ('atributos_extra/atributos_paises_temp.csv', 'w', newline="") as outfile:
+    atributos = csv.reader(infile)
+    writer = csv.writer(outfile)    
+    for line in atributos:
+        if line[0] == 'pais':
+            writer.writerow(line)
+        else:
+            gdp = line[2]
+            if gdp != '':
+                numero = gdp.split(",")
+                int_numero = ""
+                for n in numero:
+                    int_numero += n
+                int_numero = int(int_numero)
+                row = [line[0], line[1], int_numero, line[3], line[4], line[5], line[6], line[7]]
+                writer.writerow(row)
+
+
+os.remove('atributos_extra/atributos_paises.csv')
+os.rename('atributos_extra/atributos_paises_temp.csv', 'atributos_extra/atributos_paises.csv')

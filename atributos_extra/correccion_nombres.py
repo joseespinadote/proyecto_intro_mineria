@@ -62,6 +62,7 @@ indiceGINI = indiceGINI[['Country/Region', 'giniIndex', 'pop2020']]
 gastoEnSalud.replace(dict_error, inplace=True)
 edadMedia.replace(dict_error, inplace=True)
 PIB.replace(dict_error, inplace=True)
+PIB.replace(to_replace={'—': np.nan}, inplace=True)
 indiceGINI.replace(dict_error, inplace=True)
 tazaMuerte.replace(dict_error, inplace=True)
 
@@ -77,7 +78,6 @@ paises_covid_df = paises_covid_df.join(tazaMuerte.set_index('Country/Region'), o
 #### Renombrar columnas
 
 paises_covid_df.columns = ['pais', 'gdp_rank', 'gdp_usd', 'gdp_en_salud', 'edad_media', 'gini', 'poblacion', 'taza_muerte1000']
-
 
 ### Guardar datos
 covid_data_frame.to_csv('covid_19_data.csv', index=False)
