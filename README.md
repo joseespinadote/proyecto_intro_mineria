@@ -9,6 +9,8 @@ proyecto mineria de datos 1er semestre
 * Ejecutar script *preproceso.py* en el directorio principal
 * En *dataset.csv* estara el resultado del preproceso, y en *atributos_extra/atributos_paises.csv* la tabla con los datos de interes para los paises del dataset
 * Para obtener un dataframe que contenga la informacion de kaggle y los atributos encontrados:
-- dataset = pd.read_csv('dataset.csv')
-- atributos = pd.read_csv('atributos_extra/atributos_paises.csv')
-- df = dataset.join(atributos.set_index('pais'), on='pais')
+```python
+dataset = pd.read_csv('dataset.csv')
+atributos = pd.read_csv('atributos_extra/atributos_paises.csv')
+dset_extra = dataset.join(atributos.set_index('pais'), on='pais')
+```
