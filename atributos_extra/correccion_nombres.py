@@ -116,6 +116,10 @@ for pais in distintos:
     group_covid_data = group_covid_data.drop(pais, axis=0)
 group_covid_data.reset_index(inplace=True)
 
+paises_covid_df = paises_covid_df.set_index('pais')
+for pais in distintos:
+    paises_covid_df = paises_covid_df.drop(pais, axis=0)
+paises_covid_df.reset_index(inplace=True)
 
 ### Guardar datos
 group_covid_data.to_csv('covid_19_data.csv', index=False)
