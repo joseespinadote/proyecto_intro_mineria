@@ -7,7 +7,7 @@ import os
 
 filepath_read = 'atributos_extra/covid_19_data.csv'
 filepath_write = 'dataset.csv'
-dataset_headers = ['num_dia_desde_primer_caso','region','pais',
+dataset_headers = ['num_dia_desde_primer_caso','pais',
     'num_confirmados','num_fallecidos','num_recuperados','acc_confirmados',
     'acc_fallecidos','acc_recuperados','fecha_observacion','num_dia_desde_22_enero']
 date_inicio_dataset = datetime.date(2020,1,22)
@@ -24,51 +24,51 @@ with open(filepath_write, 'w', newline="") as fpw:
         for line in archivo_csv:
             if contador > 0 :
                 num_dia_desde_primer_caso = 0
-                num_confirmados = int(float(line[5]))
-                num_fallecidos = int(float(line[6]))
-                num_recuperados = int(float(line[7]))
+                num_confirmados = int(float(line[3]))
+                num_fallecidos = int(float(line[4]))
+                num_recuperados = int(float(line[5]))
                 arrFechaObservacion = line[1].split("/")
                 fechaObservacion = datetime.date(int(arrFechaObservacion[2]),
                     int(arrFechaObservacion[0]),
                     int(arrFechaObservacion[1]))
                 num_dia_desde_22_enero = (fechaObservacion - date_inicio_dataset).days
-                region = line[2]
-                pais = line[3]
-                if(not region):
-                    region = pais
-                acc_confirmados = int(float(line[5]))
-                acc_fallecidos = int(float(line[6]))
-                acc_recuperados = int(float(line[7]))
+                #region = line[2]
+                pais = line[0]
+                #if(not region):
+                #    region = pais
+                acc_confirmados = int(float(line[3]))
+                acc_fallecidos = int(float(line[4]))
+                acc_recuperados = int(float(line[5]))
                 CFR = [acc_confirmados,acc_fallecidos,acc_recuperados]
-                llave = region
+                llave = pais
                 # Filtro para Diamond Princess en region
-                if "Diamond Princess" in llave:
-                    continue
+                #if "Diamond Princess" in llave:
+                #    continue
                 # Filas de recuperados US y Canada
-                if llave == "Recovered" :
-                    continue
-                if region.strip() == "" :
-                    llave = pais
-                    # Filtro para Diamond Princess en pais
-                    if "Diamond Princes" in llave:
-                        continue
-                    if llave not in primera_fecha_pais :
-                        primera_fecha_pais[llave] = fechaObservacion
-                    else :
-                        num_dia_desde_primer_caso = (fechaObservacion - primera_fecha_pais[llave]).days
-                        num_confirmados = CFR[0] - ultimo_dato_pais[llave][0]
-                        num_fallecidos = CFR[1] - ultimo_dato_pais[llave][1]
-                        num_recuperados = CFR[2] - ultimo_dato_pais[llave][2]
-                    ultimo_dato_pais[llave] = CFR
+                #if llave == "Recovered" :
+                #    continue
+                #if region.strip() == "" :
+                #    llave = pais
+                #    # Filtro para Diamond Princess en pais
+                #    if "Diamond Princes" in llave:
+                #        continue
+                if llave not in primera_fecha_pais :
+                    primera_fecha_pais[llave] = fechaObservacion
                 else :
-                    if llave not in primera_fecha_region :
-                        primera_fecha_region[llave] = fechaObservacion
-                    else :
-                        num_dia_desde_primer_caso = (fechaObservacion - primera_fecha_region[llave]).days
-                        num_confirmados = CFR[0] - ultimo_dato_region[llave][0]
-                        num_fallecidos = CFR[1] - ultimo_dato_region[llave][1]
-                        num_recuperados = CFR[2] - ultimo_dato_region[llave][2]
-                    ultimo_dato_region[llave] = CFR
+                    num_dia_desde_primer_caso = (fechaObservacion - primera_fecha_pais[llave]).days
+                    num_confirmados = CFR[0] - ultimo_dato_pais[llave][0]
+                    num_fallecidos = CFR[1] - ultimo_dato_pais[llave][1]
+                    num_recuperados = CFR[2] - ultimo_dato_pais[llave][2]
+                ultimo_dato_pais[llave] = CFR
+                #else :
+                #    if llave not in primera_fecha_region :
+                #        primera_fecha_region[llave] = fechaObservacion
+                #    else :
+                #        num_dia_desde_primer_caso = (fechaObservacion - primera_fecha_region[llave]).days
+                #        num_confirmados = CFR[0] - ultimo_dato_region[llave][0]
+                #        num_fallecidos = CFR[1] - ultimo_dato_region[llave][1]
+                #        num_recuperados = CFR[2] - ultimo_dato_region[llave][2]
+                #    ultimo_dato_region[llave] = CFR
                 # para echar un ojo descomenten la linea a continuación. Excelente dupla para usar con "grep"
                 # Hebei, Gansu, Grand Princess, Tennessee, Washington, Virgin Islands, Omaha, NE (From Diamond Princess), Reunion
                 # occupied Palestinian territory
@@ -76,7 +76,7 @@ with open(filepath_write, 'w', newline="") as fpw:
                 #if region=="Diamond Princess cruise ship" :
                 #if pais=="occupied Palestinian territory" :
                 #    print([num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados])
-                row = [num_dia_desde_primer_caso, region, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados, line[1], num_dia_desde_22_enero]
+                row = [num_dia_desde_primer_caso, pais, num_confirmados, num_fallecidos, num_recuperados, acc_confirmados, acc_fallecidos, acc_recuperados, line[1], num_dia_desde_22_enero]
                 csv_writer.writerow(row)
             contador += 1
 

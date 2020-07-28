@@ -31,6 +31,7 @@ covid_data_frame['Province/State'].fillna(value=np.nan, inplace=True)
 
 
 ### Pares Pais-Region
+'''
 pares = []
 for pair in covid_data_frame[['Country/Region', 'Province/State']].values.tolist():
     pais = pair[0]
@@ -41,6 +42,11 @@ for pair in covid_data_frame[['Country/Region', 'Province/State']].values.tolist
 
 pares.sort()
 par_df = pd.DataFrame(pares)
+paises_covid = covid_data_frame['Country/Region'].unique()
+paises_covid.sort()
+'''
+### GroupBy para colapsar regiones
+group_covid_data = covid_data_frame.groupby(by=['ObservationDate', 'Country/Region'], as_index=False).agg(func='sum')
 paises_covid = covid_data_frame['Country/Region'].unique()
 paises_covid.sort()
 
@@ -79,15 +85,7 @@ paises_covid_df = paises_covid_df.join(tazaMuerte.set_index('Country/Region'), o
 
 paises_covid_df.columns = ['pais', 'gdp_rank', 'gdp_usd', 'gdp_en_salud', 'edad_media', 'gini', 'poblacion', 'taza_muerte1000']
 
-### Guardar datos
-covid_data_frame.to_csv('covid_19_data.csv', index=False)
-par_df.to_csv('pais_region.csv', index=False)
-paises_covid_df.to_csv('atributos_paises.csv', index=False)
-
-
 ### Revisar paises entre tablas (checkear diferencias)
-
-'''
 array1 = gastoEnSalud['Country/Region'].unique()
 array2 = edadMedia['Country/Region'].unique()
 array3 = PIB['Country/Region'].unique()
@@ -100,9 +98,6 @@ array3.sort()
 array4.sort()
 array5.sort()
 
-
-
-
 iguales =[]
 distintos = []
 for pais in paises_covid:
@@ -114,5 +109,15 @@ for pais in paises_covid:
         else:
             contador += 1
     if contador != 0:
-        distintos.append([pais, contador])
-'''
+        distintos.append(pais)
+
+group_covid_data = group_covid_data.set_index('Country/Region')
+for pais in distintos:
+    group_covid_data = group_covid_data.drop(pais, axis=0)
+group_covid_data.reset_index(inplace=True)
+
+
+### Guardar datos
+group_covid_data.to_csv('covid_19_data.csv', index=False)
+#par_df.to_csv('pais_region.csv', index=False)
+paises_covid_df.to_csv('atributos_paises.csv', index=False)
