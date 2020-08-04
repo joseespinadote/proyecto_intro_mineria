@@ -72,6 +72,7 @@ class ClusteringTunning(BaseEstimator, ClusterMixin):
     def prediction(self):
         return self.__prediction
 
+
     def fit(self, X, y=None, **kwargs):
         self.__data = X
         self.__estimator_ = GaussianMixture(**kwargs).fit(X.values)
@@ -101,3 +102,15 @@ class ClusteringTunning(BaseEstimator, ClusterMixin):
     def scatter(self):
         plt.figure()
         return sns.pairplot(data=self.__data) #sns.scatterplot(x=0, y=1, data=X_embedded)
+
+    def plot_clustering(self, name=''):
+        values = self.__X_embedded
+        values['Grupo'] = self.__prediction
+        f = plt.figure(figsize=(7, 7))
+        ax = sns.scatterplot(x=0, y=1, data = values, hue = 'Grupo')
+
+        ax.grid(True)
+        ax.set_title(name+' clustering', fontsize=14)
+        ax.set_xlabel('1st representative feature')
+        ax.set_ylabel('2nd representative feature')
+        return f, ax
