@@ -72,9 +72,9 @@ class ClusteringTunning(BaseEstimator, ClusterMixin):
     def prediction(self):
         return self.__prediction
 
-    def fit(self, X, y=None):
+    def fit(self, X, y=None, **kwargs):
         self.__data = X
-        self.__estimator_ = GaussianMixture(n_components=5, covariance_type='full').fit(X.values)
+        self.__estimator_ = GaussianMixture(**kwargs).fit(X.values)
         self.__X_embedded = DataFrame(self.__visualizer.fit_transform(X), index=self.__data.index)
         #self.__estimator_ = KMeans()
         return self
